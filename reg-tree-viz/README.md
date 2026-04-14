@@ -1,59 +1,152 @@
-# RegTreeViz
+# Regulatory Document Visualizer
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.7.
+An interactive web application that transforms regulatory and legal texts into visual tree diagrams using AI-powered document analysis.
 
-## Development server
+**Paste any regulatory text → Claude AI extracts the hierarchy → D3.js renders an interactive tree**
 
-To start a local development server, run:
+![Angular](https://img.shields.io/badge/Angular-21-DD0031?logo=angular)
+![D3.js](https://img.shields.io/badge/D3.js-7-F9A03C?logo=d3dotjs)
+![Claude AI](https://img.shields.io/badge/Claude_AI-Sonnet_4-CC785C)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript)
+
+## Features
+
+- **AI-Powered Parsing** — Claude AI analyzes regulatory text and extracts the document hierarchy automatically
+- **Interactive Tree Visualization** — Collapsible/expandable D3.js tree with zoom and pan
+- **Multi-Language Support** — Works with regulatory documents in any language
+- **Hover Tooltips** — Hover truncated nodes to see full clause text
+- **Export JSON** — Download the extracted document structure as JSON
+- **Responsive Layout** — Works on desktop and tablet screens
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Frontend | Angular 21, TypeScript, SCSS |
+| Visualization | D3.js 7 (tree layout, zoom, transitions) |
+| UI Components | Angular Material (Azure/Blue theme) |
+| AI Backend | Claude API (Sonnet 4) via Express.js proxy |
+| Deployment | GitHub Pages (frontend) |
+
+## Architecture
+
+```
+┌─────────────────┐     ┌──────────────┐     ┌─────────────┐
+│  Angular App    │────▶│ Express.js   │────▶│ Claude API  │
+│  (D3.js Tree)   │◀────│ Proxy Server │◀────│ (Sonnet 4)  │
+└─────────────────┘     └──────────────┘     └─────────────┘
+     Port 4200              Port 3000          api.anthropic.com
+```
+
+- **Angular frontend** handles UI, text input, and D3 tree rendering
+- **Express proxy** keeps the API key server-side (never exposed to browser)
+- **Claude API** parses regulatory text and returns structured JSON
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 20+
+- npm
+- A [Claude API key](https://console.anthropic.com/)
+
+### Installation
+
+```bash
+cd reg-tree-viz
+npm install
+```
+
+### Running Locally
+
+**1. Start the API proxy server:**
+
+```bash
+# Set your Claude API key
+# Windows PowerShell:
+$env:CLAUDE_API_KEY="sk-ant-api03-your-key-here"
+
+# macOS/Linux:
+export CLAUDE_API_KEY="sk-ant-api03-your-key-here"
+
+# Start the proxy
+node server.js
+```
+
+**2. Start the Angular dev server (in a new terminal):**
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+**3. Open http://localhost:4200**
 
-## Code scaffolding
+### Using a .env File (Optional)
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+To avoid setting the API key every time:
 
 ```bash
-ng generate --help
+npm install dotenv
 ```
 
-## Building
+Create a `.env` file in the project root:
 
-To build the project run:
-
-```bash
-ng build
+```
+CLAUDE_API_KEY=sk-ant-api03-your-key-here
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Add `require('dotenv').config();` to the top of `server.js`.
 
-## Running unit tests
+## Usage
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+1. Paste any regulatory or legal text into the input panel
+2. Click **Generate Tree**
+3. AI analyzes the document and extracts the hierarchy
+4. Explore the interactive tree:
+   - **Click** nodes to expand/collapse branches
+   - **Scroll** to zoom in/out
+   - **Drag** to pan the view
+   - **Hover** truncated labels to see full text
+5. Click **Export JSON** to download the structure
 
-```bash
-ng test
+## Project Structure
+
+```
+reg-tree-viz/
+├── src/
+│   ├── app/
+│   │   ├── components/
+│   │   │   ├── home/                  # Main layout orchestrator
+│   │   │   ├── text-input/            # Text input panel with Material UI
+│   │   │   └── tree-visualization/    # D3.js tree rendering
+│   │   ├── models/
+│   │   │   └── tree-node.model.ts     # TreeNode interface
+│   │   ├── services/
+│   │   │   └── claude-api.service.ts  # Claude API integration + prompt
+│   │   └── shared/
+│   │       └── mock-data.ts           # Sample data for development
+│   └── environments/
+├── server.js                          # Express proxy for Claude API
+├── angular.json
+└── package.json
 ```
 
-## Running end-to-end tests
+## Deployment
 
-For end-to-end (e2e) testing, run:
+### GitHub Pages (Frontend Only)
 
-```bash
-ng e2e
-```
+The GitHub Actions workflow (`.github/workflows/deploy.yml`) automatically builds and deploys the Angular app on push to `main`.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+> **Note:** GitHub Pages serves static files only. The Express proxy server must be hosted separately (e.g., Render, Railway, AWS Elastic Beanstalk) for the AI features to work in production.
 
-## Additional Resources
+### Full Deployment (AWS)
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+| Component | AWS Service |
+|-----------|------------|
+| Angular frontend | S3 + CloudFront |
+| Express proxy | Elastic Beanstalk (Node.js) |
+| API key storage | SSM Parameter Store or Secrets Manager |
+
+## License
+
+MIT

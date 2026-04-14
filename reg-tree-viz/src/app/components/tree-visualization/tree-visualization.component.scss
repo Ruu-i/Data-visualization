@@ -1,0 +1,62 @@
+.tree-container {
+  width: 100%;
+  height: calc(100vh - 120px);
+  overflow: hidden;
+  background: #fafafa;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+:host ::ng-deep {
+  .link {
+    fill: none;
+    stroke: #90a4ae;
+    stroke-width: 1.5px;
+    stroke-opacity: 0.6;
+  }
+
+  .node circle {
+    stroke-width: 2px;
+    transition: fill 0.2s ease;
+  }
+
+  .node-root {
+    fill: #e65100;
+    stroke: #bf360c;
+  }
+
+  .node-internal {
+    fill: #1a237e;
+    stroke: #0d1757;
+  }
+
+  .node-collapsed {
+    fill: #5c6bc0;
+    stroke: #3949ab;
+  }
+
+  .node-leaf {
+    fill: #42a5f5;
+    stroke: #1e88e5;
+  }
+
+  .node-label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 11px;
+    fill: #333;
+  }
+
+  .node:hover circle {
+    filter: brightness(1.3);
+  }
+
+  .toggle-icon {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+  }
+}

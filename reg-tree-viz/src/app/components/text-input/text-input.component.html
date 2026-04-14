@@ -1,0 +1,41 @@
+<div class="text-input-panel">
+  <h2>Input Regulatory Text</h2>
+  <p class="subtitle">Paste raw regulatory text below. AI will analyze and extract the document hierarchy automatically.</p>
+
+  <mat-form-field appearance="outline" class="text-area-field">
+    <mat-label>Regulatory Text</mat-label>
+    <textarea
+      matInput
+      [(ngModel)]="regulatoryText"
+      [placeholder]="placeholder"
+      rows="14"
+      [disabled]="isLoading">
+    </textarea>
+  </mat-form-field>
+
+  <div class="actions">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onSubmit()"
+      [disabled]="!regulatoryText.trim() || isLoading">
+      <mat-icon>account_tree</mat-icon>
+      Generate Tree
+    </button>
+
+    <button
+      mat-stroked-button
+      (click)="onClear()"
+      [disabled]="isLoading">
+      <mat-icon>clear</mat-icon>
+      Clear
+    </button>
+  </div>
+
+  @if (isLoading) {
+    <div class="loading-section">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      <p class="loading-text">AI is analyzing the document structure...</p>
+    </div>
+  }
+</div>

@@ -1,0 +1,33 @@
+<div class="home-layout">
+  <aside class="input-panel">
+    <app-text-input (submitText)="onTextSubmitted($event)"></app-text-input>
+    @if (errorMessage) {
+      <div class="error-banner">{{ errorMessage }}</div>
+    }
+  </aside>
+  <section class="tree-panel">
+    @if (hasResult) {
+      <div class="tree-toolbar">
+        <span class="tree-title">{{ treeData.name }}</span>
+        <button mat-stroked-button class="export-btn" (click)="exportJson()">
+          <mat-icon>download</mat-icon>
+          Export JSON
+        </button>
+      </div>
+    }
+    @if (hasResult) {
+      <app-tree-visualization [data]="treeData"></app-tree-visualization>
+    } @else {
+      <div class="empty-state">
+        <div class="empty-icon">&#x1F333;</div>
+        <h3>No Document Loaded</h3>
+        <p>Paste regulatory text in the input panel and click <strong>Generate Tree</strong> to visualize document structure.</p>
+        <div class="feature-list">
+          <div class="feature"><mat-icon>auto_awesome</mat-icon> AI-powered structure extraction</div>
+          <div class="feature"><mat-icon>account_tree</mat-icon> Interactive collapsible tree</div>
+          <div class="feature"><mat-icon>language</mat-icon> Works with any language</div>
+        </div>
+      </div>
+    }
+  </section>
+</div>

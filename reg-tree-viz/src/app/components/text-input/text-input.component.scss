@@ -1,0 +1,61 @@
+.text-input-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  h2 {
+    margin: 0 0 4px;
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #1a237e;
+  }
+
+  .subtitle {
+    margin: 0 0 16px;
+    font-size: 0.8rem;
+    color: #666;
+  }
+}
+
+.text-area-field {
+  width: 100%;
+
+  textarea {
+    resize: vertical;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+
+  button {
+    mat-icon {
+      margin-right: 6px;
+      font-size: 18px;
+      height: 18px;
+      width: 18px;
+    }
+  }
+}
+
+.loading-section {
+  margin-top: 16px;
+
+  .loading-text {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: #1a237e;
+    text-align: center;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}

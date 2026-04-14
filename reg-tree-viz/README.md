@@ -9,6 +9,8 @@ An interactive web application that transforms regulatory and legal texts into v
 ![Claude AI](https://img.shields.io/badge/Claude_AI-Sonnet_4-CC785C)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript)
 
+![alt text](image.png)
+
 ## Features
 
 - **AI-Powered Parsing** — Claude AI analyzes regulatory text and extracts the document hierarchy automatically

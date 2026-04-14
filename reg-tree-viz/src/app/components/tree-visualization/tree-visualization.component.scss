@@ -59,4 +59,20 @@
     font-family: 'Roboto', sans-serif;
     font-weight: 700;
   }
+
+  .d3-tooltip {
+    position: fixed;
+    max-width: 400px;
+    padding: 8px 12px;
+    background: rgba(30, 30, 30, 0.95);
+    color: #fff;
+    border-radius: 6px;
+    font-size: 12px;
+    line-height: 1.5;
+    pointer-events: none;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    transition: opacity 0.15s ease;
+    word-wrap: break-word;
+  }
 }

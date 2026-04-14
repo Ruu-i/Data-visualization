@@ -21,6 +21,7 @@ export class TreeVisualizationComponent implements OnInit, OnChanges {
   private svg: any;
   private g: any;
   private zoom: any;
+  private tooltip: any;
   private root!: D3TreeNode;
   private treeLayout!: d3.TreeLayout<TreeNode>;
   private margin = { top: 40, right: 120, bottom: 40, left: 160 };
@@ -45,6 +46,13 @@ export class TreeVisualizationComponent implements OnInit, OnChanges {
 
     const container = this.treeContainer.nativeElement;
     d3.select(container).selectAll('*').remove();
+
+    // Remove any existing tooltip
+    d3.select(container.parentElement).select('.d3-tooltip').remove();
+    this.tooltip = d3.select(container.parentElement)
+      .append('div')
+      .attr('class', 'd3-tooltip')
+      .style('opacity', 0);
 
     const width = container.offsetWidth || 1200;
     const height = container.offsetHeight || 800;
@@ -148,8 +156,24 @@ export class TreeVisualizationComponent implements OnInit, OnChanges {
       .attr('text-anchor', (d: any) => (d.children || d._children) ? 'end' : 'start')
       .text((d: any) => this.truncateLabel(d.data.name, d.depth))
       .style('fill-opacity', 1e-6)
-      .append('title')
-      .text((d: any) => d.data.name);
+      .on('mouseenter', (event: MouseEvent, d: any) => {
+        const maxLen = ({ 0: 60, 1: 50, 2: 70, 3: 90 }[d.depth as number]) ?? 90;
+        if (d.data.name.length > maxLen || d.data.name.endsWith('...')) {
+          this.tooltip
+            .html(d.data.name)
+            .style('opacity', 1)
+            .style('left', (event.pageX + 12) + 'px')
+            .style('top', (event.pageY - 10) + 'px');
+        }
+      })
+      .on('mousemove', (event: MouseEvent) => {
+        this.tooltip
+          .style('left', (event.pageX + 12) + 'px')
+          .style('top', (event.pageY - 10) + 'px');
+      })
+      .on('mouseleave', () => {
+        this.tooltip.style('opacity', 0);
+      });
 
     // UPDATE: Transition nodes to new position
     const nodeUpdate = nodeEnter.merge(node);

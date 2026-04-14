@@ -51,11 +51,11 @@ Rules:
 - Top level = document or chapter grouping
 - Middle levels = articles, sections, or equivalent
 - Leaf levels = numbered clauses/paragraphs (1), (2), (a), (b) etc.
-- Keep leaf text concise (max 80 chars, add "...")
+- Keep the FULL text of each clause — do NOT truncate or abbreviate
 - Preserve original numbering and language
 
 Return ONLY this JSON structure, nothing else:
-{"name":"Document Title","children":[{"name":"Section/Article","children":[{"name":"(1) Clause text..."}]}]}
+{"name":"Document Title","children":[{"name":"Section/Article","children":[{"name":"(1) Full clause text here"}]}]}
 
 TEXT:
 ${text}`;

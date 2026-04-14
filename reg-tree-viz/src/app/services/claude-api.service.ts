@@ -80,7 +80,7 @@ ${text}`;
   analyzeText(text: string): Observable<TreeNode> {
     const body = {
       model: 'claude-sonnet-4-20250514',
-      max_tokens: 1024,
+      max_tokens: 4096,
       system: this.systemPrompt,
       messages: [
         {

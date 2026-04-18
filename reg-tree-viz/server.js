@@ -1,12 +1,4 @@
 /**
- * Simple Express proxy server for Claude API.
- *
- * WHY: The Angular dev server (Vite-based) proxy doesn't reliably
- * support header injection. This tiny server:
- * 1. Receives POST from the Angular app at /api/claude
- * 2. Forwards it to Claude's API with the API key
- * 3. Returns the response
- *
  * RUN: $env:CLAUDE_API_KEY="sk-ant-..." ; node server.js
  */
 const express = require('express');

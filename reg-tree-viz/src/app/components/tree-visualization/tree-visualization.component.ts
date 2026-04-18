@@ -175,7 +175,7 @@ export class TreeVisualizationComponent implements OnInit, OnChanges {
         this.tooltip.style('opacity', 0);
       });
 
-    // UPDATE: Transition nodes to new position
+    // Transition nodes to new position
     const nodeUpdate = nodeEnter.merge(node);
 
     nodeUpdate.transition()
